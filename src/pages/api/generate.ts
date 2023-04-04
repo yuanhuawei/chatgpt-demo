@@ -17,21 +17,21 @@ export const post: APIRoute = async(context) => {
   if (!messages) {
     return new Response(JSON.stringify({
       error: {
-        message: 'No input text.',
+        message: '请输入密码.',
       },
     }), { status: 400 })
   }
   if (sitePassword && !(sitePassword === pass || passList.includes(pass))) {
     return new Response(JSON.stringify({
       error: {
-        message: 'Invalid password.',
+        message: '密码错误.',
       },
     }), { status: 401 })
   }
   if (import.meta.env.PROD && !await verifySignature({ t: time, m: messages?.[messages.length - 1]?.content || '' }, sign)) {
     return new Response(JSON.stringify({
       error: {
-        message: 'Invalid signature.',
+        message: '签名错误.',
       },
     }), { status: 401 })
   }
